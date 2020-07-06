@@ -14,6 +14,9 @@ export default {
     },
     about (state) {
       return state.about.about
+    },
+    all (state) {
+      return state.about
     }
   },
   mutations: {
@@ -26,79 +29,62 @@ export default {
   },
   actions: {
     // -MA0mY_wLX4ydQIAna1e
-
-    async saveAs ({ commit }, payload) {
-      const id = '-MA0mY_wLX4ydQIAna1e'
-      store.commit('common/clearError')
-      store.commit('common/setLoading', true)
+    async update ({ commit, getters, dispatch }, payload) {
       try {
-        // done logic here
-        const newAbout = {
-          // img: payload.img,
-          about: payload.about,
-          skills: payload.skills
-        }
-        // ------------------ AVATAR ---------------------------------------------------------------------
+        const id = '-MA0mY_wLX4ydQIAna1e'
+        // avatar
         if (typeof (payload.img) !== 'string') {
-          await firebase.database().ref('about').child(id).update(newAbout)
-          const key = id
           const fileName = payload.img.name
-          const ext = fileName.slice(fileName.lastIndexOf('.'))
-          const storages = await firebase.storage().ref('about/avatar/' + key + '.' + ext).put(payload.img)
-
-          const imageUrl = await storages.ref.getDownloadURL()
-
-          await firebase.database().ref('about').child(key).update({ img: imageUrl })
+          const Dstorage = firebase.storage()
+          const storageRef = Dstorage.ref()
+          const desertRef = storageRef.child(`about/avatar/${id}__${getters.all.imgName}`)
+          await desertRef.delete()
+          // await firebase.storage().ref(`about/avatar/${id}__${payload.imgName}`).delete()
+          const storage = await firebase.storage().ref(`about/avatar/${id}__${fileName}`).put(payload.img)
+          const imgUrl = await storage.ref.getDownloadURL()
+          payload.img = imgUrl
+          payload.imgName = fileName
         }
-
-        // ------------------ SKILLLS ---------------------------------------------------------------------
-        for (let i = 0; i < payload.skills.length; i++) {
-          if (typeof (payload.skills[i].img) !== 'string') {
-            const key = id
-            console.log(payload.skills)
-
-            const skillName = payload.skills[i].img.name
-            // const skilExt = skillName.slice(skillName.lastIndexOf('.'))
-            const sklsFile = payload.skills[i].img
-            const storagesSkill = await firebase.storage().ref('about/skills/' + key + '__' + skillName + '_').put(sklsFile)
-            console.log('go?')
-            const skillUrl = await storagesSkill.ref.getDownloadURL()
-            const index = i
-            const title = payload.skills[i].title
-            await firebase.database().ref('about/' + id + '/skills/' + index).update({ img: skillUrl, title: title })
-            console.log('await')
-          } else {
-            await firebase.database().ref('about/' + id).update({ skills: payload.skills })
+        // skills
+        if (payload.names.length) {
+          for (let j = 0; j < payload.names.length; j++) {
+            const Dstorage = firebase.storage()
+            const storageRef = Dstorage.ref()
+            const desertRef = storageRef.child(`about/skills/${id}__${payload.names[j]}`)
+            await desertRef.delete()
+            payload.names = []
           }
         }
-        store.dispatch('about/loadAbout')
 
-        store.commit('common/setLoading', false)
+        for (let i = 0; i < payload.skills.length; i++) {
+          if (typeof (payload.skills[i].img) !== 'string') {
+            const skillName = payload.skills[i].img.name
+            const skillFile = payload.skills[i].img
+            const storageSkils = await firebase.storage().ref(`about/skills/${id}__${skillName}`).put(skillFile)
+            const skillUrl = await storageSkils.ref.getDownloadURL()
+            payload.skills[i].img = skillUrl
+          }
+        }
+        // соединяет то что есть и оюновляет то что добавили
+        const updateData = {
+          ...getters.all,
+          ...payload
+        }
+        await firebase.database().ref(`about/${id}`).update(updateData)
       } catch (error) {
-        // error logic here
-
-        store.commit('common/setLoading', false)
-        store.commit('common/setError', error.message)
+        store.commit('common/setError', error)
         throw error
       }
     },
     async loadAbout ({ commit }, payload) {
       const id = '-MA0mY_wLX4ydQIAna1e'
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         // done logic here
-        const about = await firebase.database().ref('about').once('value')
-        const loadAbout = about.val()
-        commit('loadAbout', loadAbout[id])
-
-        store.commit('common/setLoading', false)
+        const about = (await firebase.database().ref('about').once('value')).val()
+        commit('loadAbout', about[id])
       } catch (error) {
-        // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
-
         throw error
       }
     }

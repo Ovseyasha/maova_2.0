@@ -2,11 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueMeta from 'vue-meta'
 import Vuelidate from 'vuelidate'
+import VueLazyload from 'vue-lazyload'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
 // global components
 import Loader from '@/components/app/Loader'
+import Message from '@/components/app/Message'
 // firebase
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -17,9 +19,17 @@ import 'firebase/storage'
 
 // init components
 Vue.component('Loader', Loader)
+Vue.component('Message', Message)
 // init plugins
 Vue.use(VueMeta)
 Vue.use(Vuelidate)
+// or with options
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: '/assets/default.jpg',
+  loading: require('@/assets/loading.gif'),
+  attempt: 1
+})
 Vue.config.productionTip = false
 // init directives
 Vue.directive('scroll', {

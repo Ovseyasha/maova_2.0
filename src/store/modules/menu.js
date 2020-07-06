@@ -21,20 +21,35 @@ export default {
     ],
     adminList: [
       {
+        title: 'На сайт',
+        link: '/',
+        icon: 'fa-link',
+        exact: true
+      },
+      {
+        title: 'Аналитика',
+        link: '/admin/menu',
+        icon: 'fa-chart-pie'
+      },
+      {
         title: 'Обо мне',
-        link: '/admin/about'
+        link: '/admin/about',
+        icon: 'fa-address-card'
       },
       {
         title: 'Услуги',
-        link: '/admin/services'
+        link: '/admin/services',
+        icon: 'fa-paint-roller'
       },
       {
         title: 'Портфолио',
-        link: '/admin/projects'
+        link: '/admin/projects',
+        icon: 'fa-hand-holding-usd'
       },
       {
         title: 'Контакты',
-        link: '/admin/contacts'
+        link: '/admin/contacts',
+        icon: 'fa-id-card'
       }
     ]
   },

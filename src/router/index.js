@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import firebase from 'firebase/app'
 Vue.use(VueRouter)
 
 const routes = [
@@ -45,7 +45,7 @@ const routes = [
   {
     path: '/admin',
     name: 'Login',
-    meta: { layout: 'admin', auth: true },
+    meta: { layout: 'admin' },
     component: () => import('@/views/Admin/Login.vue')
   },
   {
@@ -107,6 +107,11 @@ const routes = [
     name: 'a_Contacts_view',
     meta: { layout: 'admin', auth: true },
     component: () => import('@/views/Admin/Contacts/View.vue')
+  },
+  {
+    path: '*',
+    meta: { layout: 'content' },
+    component: () => import('@/views/Error404.vue')
   }
 ]
 
@@ -116,14 +121,14 @@ const router = new VueRouter({
   routes
 })
 //  будет вызываться перед каждой сменой роутера
-// router.beforeEach((to, from, next) => {
-//   const currentUser = firebase.auth().currentUser
-//   // проверка есть ли у путя тег мета с требование авторизации
-//   const reuireAuth = to.matched.some(record => record.meta.auth)
-//   if (reuireAuth && !currentUser) {
-//     next('/login?message=login')
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser
+  // проверка есть ли у путя тег мета с требование авторизации
+  const reuireAuth = to.matched.some(record => record.meta.auth)
+  if (reuireAuth && !currentUser) {
+    next('/admin?message=login')
+  } else {
+    next()
+  }
+})
 export default router

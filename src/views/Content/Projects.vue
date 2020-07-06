@@ -70,10 +70,10 @@ export default {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    &:hover .project__title {
+    &:hover .project-block__title {
       top: -50px;
     }
-    &:hover .project__sub-title {
+    &:hover .project-block__sub-title {
       opacity: 1;
     }
     @media (max-width: 1200px) {

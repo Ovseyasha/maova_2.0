@@ -8,17 +8,26 @@
         </a>
       </div>
       <div class="project__content">
-        <div class="project__slider">
+        <div class="project__slider animate__animated animate__slideInLeft">
           <slick ref="slick" :options="slickOptions">
-            <img
-              class="project__slide"
+            <div class="project__slide" v-for="img in project.imgs" :key="img.img">
+              <div class="project__slide-title">{{img.title}}</div>
+              <img
+                class="project__slides"
+                :src="require('@/assets/loading-slider.gif')"
+                :data-lazy="img.img"
+              />
+            </div>
+            <!-- <img
+              class="project__slides"
               v-for="img in project.imgs"
               :key="img.img"
+              :src="require('@/assets/loading-slider.gif')"
               :data-lazy="img.img"
-            />
+            />-->
           </slick>
         </div>
-        <div class="project__text">
+        <div class="project__text animate__animated animate__fadeInLeft">
           <div class="project__name">{{project.subTitle}}</div>
           <div class="subs">
             <div class="subs__item">
@@ -65,11 +74,12 @@ export default {
       loading: true,
       project: {},
       slickOptions: {
+        lazyLoad: 'progressive',
         // centerMode: true,
         // slidesToShow: 1,
         dots: true,
         mobileFirst: true
-        // variableWidth: true,
+        // variableWidth: true
         // adaptiveHeight: true
         // Any other options that can be got from plugin documentation
       }
@@ -96,13 +106,6 @@ export default {
 
 <style lang="less" >
 @import '~slick-carousel/slick/slick.css';
-// .wrapper {
-//   // padding: 0 5%;
-//   // @media (max-width: 1160px) {
-//   //   padding: 30px 5%;
-//   //   height: 90vh;
-//   // }
-// }
 .slick-arrow {
   z-index: 999;
   position: absolute;
@@ -161,7 +164,7 @@ export default {
 }
 .project {
   position: relative;
-  margin-top: 8%;
+  margin-top: 5%;
   @media (max-width: 1500px) {
     margin-top: 10%;
   }
@@ -185,19 +188,37 @@ export default {
       flex-direction: column;
     }
   }
-
+  // .slick {
+  //   width: 75%;
+  //   height: auto;
+  // }
   &__slider {
+    z-index: 2;
     width: 75%;
-    // height: 80%;
+    // max-height: 80%;
+
     position: relative;
     @media (max-width: 1200px) {
       width: 100%;
     }
   }
   &__slide {
-    // max-height: 650px;
+    // max-height: 50%;
   }
-
+  &__slides {
+    width: 100%;
+    height: 100%;
+  }
+  &__slide-title {
+    font-family: Montserrat;
+    font-style: italic;
+    font-weight: medium;
+    font-size: 1em;
+    line-height: 17px;
+    letter-spacing: 0.09em;
+    margin-bottom: 1%;
+    color: #4d6a00;
+  }
   &__text {
     width: 24%;
     @media (max-width: 1200px) {

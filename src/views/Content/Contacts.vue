@@ -4,34 +4,52 @@
     <div class="contacts__items" v-else>
       <div class="links">
         <div class="links__item">
-          <div class="links__header">Позвоните мне:</div>
-          <a :href="`tel:${contacts.phone}`" class="links__text">{{contacts.phone}}</a>
+          <div class="links__header animate__animated animate__fadeInLeft">Позвоните мне:</div>
+          <a
+            :href="`tel:${contacts.phone}`"
+            class="links__text animate__animated animate__fadeInLeft"
+          >{{contacts.phone}}</a>
         </div>
         <div class="links__item">
-          <div class="links__header">Напишите мне:</div>
-          <a :href="`mailto:${contacts.email}`" class="links__text">{{contacts.email}}</a>
+          <div class="links__header animate__animated animate__fadeInLeft">Напишите мне:</div>
+          <a
+            :href="`mailto:${contacts.email}`"
+            class="links__text animate__animated animate__fadeInLeft"
+          >{{contacts.email}}</a>
         </div>
         <div class="links__item">
-          <div class="links__header">Я в социальных сетях</div>
+          <div class="links__header animate__animated animate__fadeInLeft">Я в социальных сетях</div>
           <div class="links__soc">
-            <a href="https://www.facebook.com/omdesign.su" target="_blank" class="links__text">
+            <a
+              href="https://www.facebook.com/omdesign.su"
+              target="_blank"
+              class="links__text animate__animated animate__fadeInLeft"
+            >
               <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="https://www.behance.net/maova" target="_blank" class="links__text">
+            <a
+              href="https://www.behance.net/maova"
+              target="_blank"
+              class="links__text animate__animated animate__fadeInLeft"
+            >
               <i class="fab fa-behance"></i>
             </a>
             <a
               href="https://www.instagram.com/ovchinnikova_m_design/"
               target="_blank"
-              class="links__text"
+              class="links__text animate__animated animate__fadeInLeft"
             >
               <i class="fab fa-instagram"></i>
             </a>
           </div>
         </div>
-        <a :href="contacts.price" class="links__item btn" target="_blank">скачать прайс</a>
+        <a
+          :href="contacts.price"
+          class="links__item btn animate__animated animate__fadeInUp"
+          target="_blank"
+        >скачать прайс</a>
       </div>
-      <form class="form" @submit.prevent="send">
+      <form class="form animate__animated animate__slideInRight" @submit.prevent="send">
         <textarea
           class="form__input form__input_text"
           placeholder="Задача"
@@ -166,7 +184,35 @@ export default {
       text-align: center;
     }
   }
+  .btn {
+    // flex-basis: 50%;
+    width: 80%;
+    @media (max-width: 1355px) {
+      width: 100%;
+    }
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+    text-decoration: none;
+    letter-spacing: 0.09em;
+    text-transform: lowercase;
+    text-align: center;
+    padding: 20px;
 
+    /* Gray 2 */
+    color: #4f4f4f;
+    background: none;
+    border: 1px solid #4d6a00;
+    box-sizing: border-box;
+    transition: all 0.3s;
+    &:hover {
+      background: #4d6a00;
+      color: white;
+    }
+  }
   &__header {
     font-family: Montserrat;
     font-style: normal;
@@ -187,38 +233,21 @@ export default {
 
   &__soc {
     display: flex;
-    justify-content: space-around;
     margin-top: 2%;
+    .links__text {
+      margin-right: 20%;
+      @media (max-width: 1355px) {
+        margin-right: 0;
+      }
+    }
     @media (max-width: 1355px) {
+      justify-content: space-around;
       margin: 0 auto;
       width: 65%;
     }
   }
 }
-.btn {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 22px;
-  /* identical to box height */
-  text-decoration: none;
-  letter-spacing: 0.09em;
-  text-transform: lowercase;
-  text-align: center;
-  padding: 30px 0;
 
-  /* Gray 2 */
-  color: #4f4f4f;
-  background: none;
-  border: 1px solid #4d6a00;
-  box-sizing: border-box;
-  transition: all 0.3s;
-  &:hover {
-    background: #4d6a00;
-    color: white;
-  }
-}
 .form {
   flex-basis: 65%;
   // display: flex;
@@ -268,7 +297,9 @@ export default {
   &__inputs {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+    @media (max-width: 1355px) {
+      flex-wrap: wrap;
+    }
   }
   &__section {
     display: flex;
@@ -289,6 +320,7 @@ export default {
     text-transform: lowercase;
     color: #f2f2f2;
     cursor: pointer;
+    margin-top: 20px;
     width: 35%;
     padding: 20px;
     &:active {
@@ -296,6 +328,7 @@ export default {
     }
     @media (max-width: 1355px) {
       flex-basis: 100%;
+      margin-top: 0;
     }
   }
 }

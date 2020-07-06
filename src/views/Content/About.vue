@@ -3,12 +3,12 @@
     <Loader v-if="loading" />
     <template v-else>
       <div class="desc">
-        <img :src="img" alt="avatar" class="desc__pic" />
-        <div class="desc__text">
+        <img v-lazy="img" alt="avatar" class="desc__pic animate__animated animate__fadeInDown" />
+        <div class="desc__text animate__animated animate__fadeInRightBig">
           <div class="desc__sub" v-for="(sub,index) in about" :key="index">{{sub}}</div>
         </div>
       </div>
-      <div class="skills">
+      <div class="skills animate__animated animate__fadeInRight">
         <div class="skills__header">Основные инструменты которые я использую в работе</div>
         <div class="skills__items">
           <div class="skill" v-for="skill in skills" :key="skill.title">
@@ -60,6 +60,9 @@ img {
   &__pic {
     float: left;
     margin-right: 2%;
+    width: 400px;
+    // height: 400px;
+
     @media (max-width: 600px) {
       width: 100%;
       margin-right: 0;

@@ -1,10 +1,16 @@
 <template >
   <div class="main" ref="screen" @mousemove="mouseMove">
+    <div class="animate__animated animate__fadeInLeft www">
+      <div
+        class="main__logo"
+        :style="{'transform': `translate(${x * 15}px, ${y * 15}px)` }"
+      >OM DESIGN</div>
+    </div>
+
     <div
-      class="main__logo animate__animated animate__fadeIn"
-      :style="{'transform': `translate(${x * 15}px, ${y * 15}px)` }"
-    >OM DESIGN</div>
-    <div class="main__header" :style="{'transform': `translate(-${x * 20}px, -${y * 20}px)`}">
+      class="main__header animate__animated animate__fadeIn"
+      :style="{'transform': `translate(-${x * 20}px, -${y * 20}px)`}"
+    >
       <header class="header">Марина Овчинникова</header>
       <footer class="footer">графический дизайнер</footer>
       {{orientation}}
@@ -12,7 +18,7 @@
 
     <img
       :src="require('@/assets/fon_site.png')"
-      alt
+      alt="bgMain"
       class="main__bg"
       :style="{'transform': `translate(-${x * 15}px, -${y * 15}px)`}"
     />
@@ -20,10 +26,6 @@
 </template>
 
 <script>
-// window.addEventListener('orientationchange', function () {
-//   // Выводим числовое значение ориентации
-//   this.orientation = this.$refs.screen.orientation
-// }, false)
 export default {
 
   metaInfo () {
@@ -44,16 +46,16 @@ export default {
     mouseMove (e) {
       this.x = e.pageX / this.$refs.screen.offsetWidth
       this.y = e.pageY / this.$refs.screen.offsetHeight
-      // window.addEventListener('orientationchange', function () {
-      //   // Выводим числовое значение ориентации
-      //   this.orientation = window.orientation
-      // }, false)
     }
   }
 }
 </script>
 
 <style lang="less" scoped >
+.www {
+  position: relative;
+  z-index: 2222;
+}
 .main {
   position: relative;
   background: rgb(161, 199, 0);
@@ -64,7 +66,6 @@ export default {
     rgba(89, 123, 0, 1) 93%
   );
   overflow: hidden;
-  // for block full window
   position: fixed;
   top: 0;
   left: 0;
@@ -79,7 +80,7 @@ export default {
   text-shadow: -42px 41px 21px rgba(0, 0, 0, 0.28);
   margin-top: 5%;
   margin-left: 5%;
-  z-index: 1;
+  z-index: 100000;
   font-weight: lighter;
 }
 .main__header {
@@ -90,6 +91,10 @@ export default {
 .main__bg {
   right: 0;
   position: relative;
+  animation-name: sizer;
+  animation-duration: 0.8s;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
 }
 .header {
   font-family: Montserrat;
@@ -97,7 +102,6 @@ export default {
   font-weight: 300;
   font-size: 30px;
   line-height: 37px;
-  /* identical to box height */
 
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -105,8 +109,6 @@ export default {
   color: #000000;
 }
 .footer {
-  /* podzagolovok */
-
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
@@ -135,7 +137,14 @@ export default {
   .main__logo {
     margin-top: 30%;
     text-shadow: -15px 41px 10px rgba(0, 0, 0, 0.28);
-    // font-size: 10em;
+  }
+}
+@keyframes sizer {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar :scroll="scroll"></Navbar>
+    <Navbar :scroll="scroll" v-if="this.$route.meta.layout !== 'admin'"></Navbar>
     <!-- для переключения компонентов по слоям -->
     <transition
       mode="out-in"
@@ -55,15 +55,11 @@ export default {
 html,
 body {
   height: 100%;
+  background: #e6e6e6;
 }
 body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
 }
-// .page {
-//   @media (max-width: 500px) {
-//     margin-top: 10%;
-//   }
-// }
 </style>
