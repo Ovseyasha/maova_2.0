@@ -36,16 +36,11 @@ export default {
     async loadContacts ({ commit }) {
       const id = '-MANQPK_xhzGbZt821xh'
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         const contacts = await firebase.database().ref('contacts').once('value')
         const loadContacts = contacts.val()
-
         commit('loadContacts', loadContacts[id])
-
-        store.commit('common/setLoading', false)
       } catch (error) {
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }
@@ -53,27 +48,20 @@ export default {
     async editContacts ({ commit }, payload) {
       const id = '-MANQPK_xhzGbZt821xh'
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
-        // здесь отправить на сервер
         const newContacts = payload.contacts
-
         if (payload.price !== null) {
-          console.log(payload.price)
-
           const fileName = payload.price.name
-          const storages = await firebase.storage().ref('contacts/price/' + id + '__' + fileName).put(payload.price)
+          const ext = fileName.slice(fileName.lastIndexOf('.'))
+          const storages = await firebase.storage().ref(`contacts/price/${id}${ext}`).put(payload.price)
           const fileUrl = await storages.ref.getDownloadURL()
-          payload.contacts.price = fileUrl
+          newContacts.price = fileUrl
+          newContacts.ext = ext
         }
         await firebase.database().ref('contacts').child(id).update(newContacts)
         store.dispatch('contacts/loadContacts')
-
-        store.commit('common/setLoading', false)
       } catch (error) {
         // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }
@@ -81,88 +69,76 @@ export default {
     // MAILS
     async loadMails ({ commit }) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         const mails = await firebase.database().ref('mails').once('value')
         const loadMails = mails.val()
         // console.log(loadServices)
         const mailsArr = []
-        Object.keys(loadMails).forEach((key) => {
-          const s = loadMails[key]
-          mailsArr.push({
-            ...s,
-            id: key
+        if (loadMails !== null) {
+          Object.keys(loadMails).forEach((key) => {
+            const s = loadMails[key]
+            mailsArr.push({
+              ...s,
+              id: key
+            })
           })
-        })
+        }
         commit('loadMails', mailsArr)
-
-        store.commit('common/setLoading', false)
       } catch (error) {
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }
     },
     async addMail ({ commit }, payload) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
-        // здесь отправить на сервер
-        // console.log(payload)
         const newMail = payload
+        newMail.state = 'new'
         const mails = await firebase.database().ref('mails').push(newMail)
-        // console.log(service.key)
-
-        // done logic here
         commit('addMail', {
           ...newMail,
           id: mails.key
         })
-
-        store.commit('common/setLoading', false)
       } catch (error) {
         // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }
     },
     async deleteMailById ({ commit }, payload) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         // здесь отправить на сервер
         const id = payload
         await firebase.database().ref('mails').child(id).remove()
         store.dispatch('contacts/loadMails')
-
-        store.commit('common/setLoading', false)
       } catch (error) {
         // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }
     },
     async getMailById ({ commit }, payload) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         // здесь отправить на сервер
         const id = payload
         const mail = await firebase.database().ref('mails').child(id).once('value')
         // console.log(mail.val())
         commit('getMailById', mail.val())
-
-        store.commit('common/setLoading', false)
       } catch (error) {
         // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
+      }
+    },
+    async readMsg ({ commit, dispatch }, payload) {
+      // const id = '-MANQPK_xhzGbZt821xh'
+      try {
+        await firebase.database().ref('mails').child(payload).update({ state: 'read' })
+        await dispatch.loadMails
+      } catch (error) {
+        console.log(error)
       }
     }
   }

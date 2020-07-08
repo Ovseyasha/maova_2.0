@@ -35,24 +35,22 @@ export default {
   actions: {
     async loadServices ({ commit }) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         const services = await firebase.database().ref('services').once('value')
         const loadServices = services.val()
-        // console.log(loadServices)
         const servicesArray = []
-        Object.keys(loadServices).forEach((key) => {
-          const s = loadServices[key]
-          servicesArray.push({
-            ...s,
-            id: key
+        if (loadServices !== null) {
+          Object.keys(loadServices).forEach((key) => {
+            const s = loadServices[key]
+            servicesArray.push({
+              ...s,
+              id: key
+            })
           })
-        })
-        commit('loadServices', servicesArray)
+        }
 
-        store.commit('common/setLoading', false)
+        commit('loadServices', servicesArray)
       } catch (error) {
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
 
         throw error
@@ -60,101 +58,89 @@ export default {
     },
     async addNewService ({ commit }, payload) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         // здесь отправить на сервер
         // console.log(payload)
         const newService = payload.service
         const service = await firebase.database().ref('services').push(newService)
         // console.log(service.key)
-
         const key = service.key
         const fileName = payload.img.name
-        const storages = await firebase.storage().ref('services/bg/' + key + '__' + fileName + '_').put(payload.img)
-
+        const ext = fileName.slice(fileName.lastIndexOf('.'))
+        const storages = await firebase.storage().ref('services/bg/' + key + ext).put(payload.img)
         const imageUrl = await storages.ref.getDownloadURL()
 
-        await firebase.database().ref('services').child(key).update({ img: imageUrl })
+        await firebase.database().ref('services').child(key).update({ img: imageUrl, ext: ext })
 
         newService.img = imageUrl
+        newService.ext = ext
         // done logic here
         commit('addNewService', {
           ...newService,
           id: service.key
         })
-
-        store.commit('common/setLoading', false)
       } catch (error) {
         // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }
     },
     async editServices ({ commit }, payload) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         // здесь отправить на сервер
         // console.log(payload)
 
         const id = payload.id
         const newService = payload.service
-        if (typeof (payload.img) !== 'string') {
-          const fileName = payload.img.name
-          const storages = await firebase.storage().ref('services/bg/' + id + '__' + fileName + '_').put(payload.img)
+
+        if (typeof (newService.img) !== 'string') {
+          const fileName = newService.img.name
+          const ext = fileName.slice(fileName.lastIndexOf('.'))
+          const storages = await firebase.storage().ref('services/bg/' + id + ext).put(newService.img)
 
           const imageUrl = await storages.ref.getDownloadURL()
           newService.img = imageUrl
+          newService.ext = ext
         }
         await firebase.database().ref('services').child(id).update(newService)
         store.dispatch('services/loadServices')
-
-        store.commit('common/setLoading', false)
       } catch (error) {
         // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }
     },
 
-    async deleteServicesById ({ commit }, payload) {
+    async deleteServicesById ({ commit, dispatch, getters }, payload) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         // здесь отправить на сервер
         const id = payload
+        await dispatch('loadServiceById', id)
+        const s = getters.service
+        const ext = s.ext
+        const storage = firebase.storage()
+        const storageRef = storage.ref()
+        const desertRef = storageRef.child(`services/bg/${id}${ext}`)
+        await desertRef.delete()
         await firebase.database().ref('services').child(id).remove()
         store.dispatch('services/loadServices')
-
-        store.commit('common/setLoading', false)
       } catch (error) {
         // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }
     },
     async loadServiceById ({ commit }, payload) {
       store.commit('common/clearError')
-      store.commit('common/setLoading', true)
       try {
         // здесь отправить на сервер
         const id = payload
-        const service = await firebase.database().ref('services').child(id).once('value')
-        const loadService = service.val()
-        // console.log(loadService)
-
-        commit('loadServiceById', loadService)
-        store.commit('common/setLoading', false)
+        const service = (await firebase.database().ref('services').child(id).once('value')).val()
+        commit('loadServiceById', service)
       } catch (error) {
         // error logic here
-
-        store.commit('common/setLoading', false)
         store.commit('common/setError', error.message)
         throw error
       }

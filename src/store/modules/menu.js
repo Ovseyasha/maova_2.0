@@ -27,7 +27,7 @@ export default {
         exact: true
       },
       {
-        title: 'Аналитика',
+        title: 'Статистика',
         link: '/admin/menu',
         icon: 'fa-chart-pie'
       },
@@ -49,7 +49,8 @@ export default {
       {
         title: 'Контакты',
         link: '/admin/contacts',
-        icon: 'fa-id-card'
+        icon: 'fa-id-card',
+        count: true
       }
     ]
   },

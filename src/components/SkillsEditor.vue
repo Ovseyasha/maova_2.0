@@ -1,11 +1,17 @@
 <template>
   <div class="skills">
     <div class="skills__add">
-      <img :src="skillUrl" class="skills__preview" />
-      <button type="button" @click="onPickFile" class="skills__btn">
+      <img :src="skillUrl" class="skills__item skills__preview" v-if="skillUrl !== ''" />
+      <img :src="require('@/assets/default.jpg')" class="skills__item skills__preview" v-else />
+      <button type="button" @click="onPickFile" class="skills__item skills__btn">
         <i class="fas fa-arrow-up"></i> Выбрать
       </button>
-      <input type="text" class="skills__text" placeholder="Введите название" v-model="title" />
+      <input
+        type="text"
+        class="skills__item skills__text"
+        placeholder="Введите название"
+        v-model="title"
+      />
       <input
         type="file"
         style="display: none"
@@ -13,7 +19,7 @@
         ref="fileInput"
         @change="onfilePicked"
       />
-      <button type="button" @click="add" class="skills__btn">
+      <button type="button" @click="add" class="skills__item skills__btn">
         <i class="fas fa-plus-square"></i> Добавить
       </button>
     </div>
@@ -93,11 +99,16 @@ export default {
   display: flex;
   flex-direction: column;
   &__add {
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
   }
-
+  &__item {
+    flex-basis: fill;
+  }
   &__preview {
     width: 50px;
+    height: 50px;
     margin-right: 10px;
   }
 
@@ -117,6 +128,10 @@ export default {
     font-size: 18px;
     padding: 1%;
     border-radius: 0;
+    @media (max-width: 800px) {
+      flex-basis: 100%;
+      margin: 10px 0;
+    }
   }
 
   &__btn {
@@ -129,6 +144,10 @@ export default {
     color: #f2f2f2;
     cursor: pointer;
     padding: 10px;
+    @media (max-width: 800px) {
+      flex-basis: 100%;
+      margin: 10px 0;
+    }
   }
 
   &__list {

@@ -18,13 +18,6 @@
                 :data-lazy="img.img"
               />
             </div>
-            <!-- <img
-              class="project__slides"
-              v-for="img in project.imgs"
-              :key="img.img"
-              :src="require('@/assets/loading-slider.gif')"
-              :data-lazy="img.img"
-            />-->
           </slick>
         </div>
         <div class="project__text animate__animated animate__fadeInLeft">
@@ -47,7 +40,6 @@
       </div>
     </template>
   </div>
-  <!-- :src="require('@/assets/loading.gif')" -->
 </template>
 
 <script>
@@ -57,16 +49,19 @@ export default {
     const id = this.$route.params.id
     await this.$store.dispatch('projects/loadProjectById', id)
     this.project = await this.$store.getters['projects/project']
+    if (!this.project) {
+      this.$router.push({ name: 'Error' })
+    }
     this.loading = false
   },
-  beforeUpdate () {
+  beforeDestroy () {
     if (this.$refs.slick) {
       this.$refs.slick.destroy()
     }
   },
   metaInfo () {
     return {
-      title: `${this.project.title} | OMDESIGN`
+      title: this.project.title || 'Прокект' + ' | OMDESIGN'
     }
   },
   data () {
@@ -75,14 +70,14 @@ export default {
       project: {},
       slickOptions: {
         lazyLoad: 'progressive',
-        // centerMode: true,
-        // slidesToShow: 1,
         dots: true,
         mobileFirst: true
-        // variableWidth: true
-        // adaptiveHeight: true
-        // Any other options that can be got from plugin documentation
       }
+    }
+  },
+  computed: {
+    header () {
+      return this.project.title.toLowerCase()
     }
   },
   methods: {
@@ -188,22 +183,13 @@ export default {
       flex-direction: column;
     }
   }
-  // .slick {
-  //   width: 75%;
-  //   height: auto;
-  // }
   &__slider {
     z-index: 2;
     width: 75%;
-    // max-height: 80%;
-
     position: relative;
     @media (max-width: 1200px) {
       width: 100%;
     }
-  }
-  &__slide {
-    // max-height: 50%;
   }
   &__slides {
     width: 100%;
@@ -213,11 +199,14 @@ export default {
     font-family: Montserrat;
     font-style: italic;
     font-weight: medium;
-    font-size: 1em;
+    font-size: 14px;
     line-height: 17px;
     letter-spacing: 0.09em;
     margin-bottom: 1%;
     color: #4d6a00;
+    @media (max-width: 500px) {
+      font-size: 10px;
+    }
   }
   &__text {
     width: 24%;

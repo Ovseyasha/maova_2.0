@@ -78,9 +78,9 @@ export default {
     projects () {
       // заменить на диспатч из бд с сортировкой по категории услуги
       const allProjects = this.$store.getters['projects/projects']
-      const service = this.service.title
+      const service = this.service.title.toLowerCase()
       const projects = allProjects.filter(item => {
-        return item.nameOfService === service
+        return item.nameOfService.toLowerCase() === service
       })
       return projects
     },

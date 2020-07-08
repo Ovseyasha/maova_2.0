@@ -110,6 +110,7 @@ const routes = [
   },
   {
     path: '*',
+    name: 'Error',
     meta: { layout: 'content' },
     component: () => import('@/views/Error404.vue')
   }

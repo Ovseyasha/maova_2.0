@@ -1,6 +1,12 @@
 <template>
   <div class="change">
-    <img :src="img" alt="avatar" class="change__img" v-if="imageUrl == '' " />
+    <img :src="img" alt="avatar" class="change__img" v-if="imageUrl == '' && img !== '' " />
+    <img
+      :src="require('@/assets/default.jpg')"
+      alt="avatar"
+      class="change__img"
+      v-else-if="imageUrl == '' && img === ''"
+    />
     <img :src="imageUrl" alt="avatar" class="change__img" v-else />
     <div class="change__item">
       <div class="change__file">{{filename}}</div>
@@ -97,8 +103,6 @@ export default {
     color: #f2f2f2;
     cursor: pointer;
     padding: 10px;
-    &_reset {
-    }
   }
 }
 </style>

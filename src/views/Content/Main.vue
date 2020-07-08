@@ -44,8 +44,10 @@ export default {
   },
   methods: {
     mouseMove (e) {
-      this.x = e.pageX / this.$refs.screen.offsetWidth
-      this.y = e.pageY / this.$refs.screen.offsetHeight
+      if (this.$refs.screen.offsetWidth > 400) {
+        this.x = e.pageX / this.$refs.screen.offsetWidth
+        this.y = e.pageY / this.$refs.screen.offsetHeight
+      }
     }
   }
 }

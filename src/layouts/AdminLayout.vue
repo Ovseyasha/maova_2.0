@@ -1,6 +1,6 @@
 <template>
   <div class="admin">
-    <AdminNavbar v-if="this.$route.name !== 'Login'"></AdminNavbar>
+    <AdminNavbar v-if="this.$route.name !== 'Login'" :cnt="cnt"></AdminNavbar>
     <AdminSidebar v-if="this.$route.name !== 'Login'"></AdminSidebar>
     <div class="admin__wrapper">
       <transition
@@ -18,9 +18,12 @@
 import AdminNavbar from '@/components/app/AdminNavbar'
 import AdminSidebar from '@/components/app/AdminSidebar'
 export default {
+  async beforeUpdate () {
+    await this.$store.dispatch('contacts/loadMails')
+  },
   metaInfo () {
     return {
-      title: this.titleOfPage.toUpperCase() + ' | OMDESIGN'
+      title: this.titleOfPage.toUpperCase() + ' | Адмннпанель'
     }
   },
   data () {
@@ -37,6 +40,17 @@ export default {
         }
       }
       return title
+    },
+    cnt () {
+      this.$store.dispatch('contacts/loadMails')
+      const mails = this.$store.getters['contacts/mails']
+      let c = 0
+      for (let i = 0; i < mails.length; i++) {
+        if (mails[i].state === 'new') {
+          c++
+        }
+      }
+      return c
     }
   },
   components: {

@@ -14,6 +14,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/storage'
+import 'firebase/analytics'
 // directives
 // import scrolldirective from '@/directives/scroll.directive'
 
@@ -55,7 +56,7 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
-
+firebase.analytics()
 let app
 
 firebase.auth().onAuthStateChanged(() => {

@@ -23,21 +23,19 @@
 export default {
   props: ['subs'],
   mounted () {
-    this.newSubs = this.subs
+    this.newSubs = this.subs || ['']
   },
   data () {
     return {
-      newSubs: []
+      newSubs: ['']
     }
   },
   methods: {
     add () {
       this.newSubs.push('')
-      this.$emit('changed-about', this.newSubs)
     },
     remove (i) {
       this.newSubs.splice(i, 1)
-      this.$emit('changed-about', this.newSubs)
     }
   }
 }
