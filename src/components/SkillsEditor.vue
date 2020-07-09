@@ -3,12 +3,12 @@
     <div class="skills__add">
       <img :src="skillUrl" class="skills__item skills__preview" v-if="skillUrl !== ''" />
       <img :src="require('@/assets/default.jpg')" class="skills__item skills__preview" v-else />
-      <button type="button" @click="onPickFile" class="skills__item skills__btn">
+      <button type="button" @click="onPickFile" class="skills__item skills__btn btn">
         <i class="fas fa-arrow-up"></i> Выбрать
       </button>
       <input
         type="text"
-        class="skills__item skills__text"
+        class="skills__item skills__text input"
         placeholder="Введите название"
         v-model="title"
       />
@@ -19,7 +19,7 @@
         ref="fileInput"
         @change="onfilePicked"
       />
-      <button type="button" @click="add" class="skills__item skills__btn">
+      <button type="button" @click="add" class="skills__item skills__btn btn">
         <i class="fas fa-plus-square"></i> Добавить
       </button>
     </div>
@@ -114,35 +114,13 @@ export default {
 
   &__text {
     margin: 0 20px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     flex-basis: 30%;
-    outline: none;
-    background: #f5f5f5;
-    border: 1px solid #959595;
-    box-sizing: border-box;
-    font-family: Montserrat;
-    font-style: italic;
-    font-weight: normal;
-    font-size: 18px;
-    padding: 1%;
-    border-radius: 0;
     @media (max-width: 800px) {
       flex-basis: 100%;
       margin: 10px 0;
     }
   }
-
   &__btn {
-    background: #4d6a00;
-    outline: none;
-    border: none;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    color: #f2f2f2;
-    cursor: pointer;
     padding: 10px;
     @media (max-width: 800px) {
       flex-basis: 100%;

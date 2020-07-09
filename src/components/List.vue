@@ -2,7 +2,7 @@
   <div class="list">
     <div class="list__header">{{ header}}</div>
     <template v-if="mode !== 'contacts'">
-      <router-link class="list__add" :to="pathToAdd">
+      <router-link class="list__add btn" :to="pathToAdd">
         <i class="fas fa-plus-square"></i> Добавить
       </router-link>
       <Loader v-if="loading" />
@@ -65,8 +65,8 @@
       <div class="modal" v-show="modal">
         <div class="modal__text">Вы действительно хотите удалить "{{title}}"?</div>
         <div class="modal__btns">
-          <button class="modal__btn close" @click="modal = !modal">Отмена</button>
-          <button class="modal__btn del" @click="remove(id)">Удалить</button>
+          <button class="modal__btn btn close" @click="modal = !modal">Отмена</button>
+          <button class="modal__btn btn del" @click="remove(id)">Удалить</button>
         </div>
       </div>
     </transition>
@@ -126,7 +126,6 @@ export default {
           await this.$store.dispatch('services/loadServices')
           this.data = this.$store.getters['services/services']
         } catch (error) {
-          console.log(error)
           alert(error)
         }
       } else if (this.mode === 'projects') {
@@ -136,7 +135,6 @@ export default {
           await this.$store.dispatch('projects/LoadProjects')
           this.data = this.$store.getters['projects/projects']
         } catch (error) {
-          console.log(error)
           alert(error)
         }
       } else {
@@ -146,7 +144,6 @@ export default {
           await this.$store.dispatch('contacts/loadMails')
           this.data = this.$store.getters['contacts/mails']
         } catch (error) {
-          console.log(error)
           alert(error)
         }
       }
@@ -179,18 +176,7 @@ export default {
   &__add {
     margin-bottom: 50px;
     width: 20%;
-    text-decoration: none;
-    background: #4d6a00;
-    outline: none;
-    border: none;
-    font-size: 18px;
-    text-align: center;
-    color: #f2f2f2;
-    cursor: pointer;
     padding: 20px;
-    &:active {
-      background: darken(#4d6a00, 5%);
-    }
     @media (max-width: 660px) {
       width: 100%;
     }
@@ -294,11 +280,7 @@ export default {
     margin: 0 20%;
   }
   &__btn {
-    outline: none;
-    border: none;
     background: none;
-    font-size: 1em;
-    cursor: pointer;
     padding: 1% 2%;
   }
 }

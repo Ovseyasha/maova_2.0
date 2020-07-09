@@ -22,6 +22,15 @@ import Navbar from '@/components/app/Navbar'
 import Links from '@/components/app/Links'
 
 export default {
+  metaInfo () {
+    return {
+      title: 'OMDESIGN',
+      meta: [
+        { description: 'Сайт портфолио графического дизайнера - Овчинниковой Марины' },
+        { keywords: 'Дизайн, Дизайнер, Графический дизайнер, Сайт-портфолио, Design, Designer, Graphic designer, website portfolio ' }
+      ]
+    }
+  },
   data () {
     return {
       scroll: false
@@ -52,6 +61,7 @@ export default {
 </script>
 <style lang="less">
 @import '~animate.css/animate.min.css';
+@import 'assets/style.less';
 html,
 body {
   height: 100%;

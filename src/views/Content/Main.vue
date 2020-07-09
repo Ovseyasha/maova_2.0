@@ -1,10 +1,10 @@
 <template >
   <div class="main" ref="screen" @mousemove="mouseMove">
     <div class="animate__animated animate__fadeInLeft www">
-      <div
+      <h1
         class="main__logo"
         :style="{'transform': `translate(${x * 15}px, ${y * 15}px)` }"
-      >OM DESIGN</div>
+      >OM DESIGN</h1>
     </div>
 
     <div
@@ -13,7 +13,6 @@
     >
       <header class="header">Марина Овчинникова</header>
       <footer class="footer">графический дизайнер</footer>
-      {{orientation}}
     </div>
 
     <img
@@ -27,7 +26,6 @@
 
 <script>
 export default {
-
   metaInfo () {
     return {
       title: 'OMDESIGN'
@@ -35,7 +33,6 @@ export default {
   },
   data () {
     return {
-      orientation: null,
       x: 0,
       y: 0
     }

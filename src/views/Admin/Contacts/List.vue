@@ -4,10 +4,10 @@
     <Loader v-if="loading" />
     <form class="list__edit" v-else @submit.prevent="save">
       <div class="list__item">
-        <input type="email" class="list__input" placeholder="Ваш Email" v-model="email" />
+        <input type="email" class="input list__input" placeholder="Ваш Email" v-model="email" />
       </div>
       <div class="list__item">
-        <input type="phone" class="list__input" placeholder="Ваш телефон" v-model="phone" />
+        <input type="phone" class="input list__input" placeholder="Ваш телефон" v-model="phone" />
       </div>
       <div class="list__item list__item_file">
         <input
@@ -17,7 +17,7 @@
           ref="fileInput"
           @change="onfilePicked"
         />
-        <button class="list__btn" type="button" @click="onPickFile">Обновить прайслист</button>
+        <button class="btn list__btn" type="button" @click="onPickFile">Обновить прайслист</button>
         <a
           :href="price"
           class="list__filename"
@@ -27,7 +27,7 @@
         <div class="list__filename">{{fileName}}</div>
       </div>
       <div class="list__item">
-        <button type="submit" class="list__btn">Сохранить</button>
+        <button type="submit" class="btn list__btn">Сохранить</button>
       </div>
     </form>
     <List :mode="'contacts'"></List>
@@ -71,7 +71,6 @@ export default {
       this.file = files[0]
     },
     async save () {
-      console.log(this.email, this.phone, this.price, this.file)
       try {
         this.loading = true
         await this.$store.dispatch('contacts/editContacts', {
@@ -91,7 +90,6 @@ export default {
         this.price = data.price
         this.loading = false
       } catch (error) {
-        console.log(error)
         alert(error)
         this.loading = false
       }
@@ -120,7 +118,6 @@ export default {
     letter-spacing: 0.09em;
     text-transform: uppercase;
   }
-
   &__edit {
     display: flex;
     justify-content: space-evenly;
@@ -128,9 +125,7 @@ export default {
     margin-bottom: 20px;
     border-bottom: 2px solid grey;
   }
-
   &__item {
-    // margin: 2%;
     @media (max-width: 1100px) {
       flex-basis: 50%;
       margin-bottom: 20px;
@@ -148,36 +143,13 @@ export default {
     }
   }
   &__input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     flex-basis: 30%;
-    outline: none;
-    background: #f5f5f5;
-    border: 1px solid #959595;
-    box-sizing: border-box;
-    font-family: Montserrat;
-    font-style: italic;
-    font-weight: normal;
-    font-size: 18px;
     padding: 10px;
-    border-radius: 0;
   }
-
   &__btn {
-    background: @green;
-    outline: none;
-    border: none;
-    font-size: 18px;
-    text-align: center;
-    color: #f2f2f2;
-    cursor: pointer;
-    padding: 10px;
     margin-bottom: 10px;
   }
-
   &__filename {
-    // text-decoration: none;
     color: #000;
     @media (max-width: 600px) {
       text-align: center;

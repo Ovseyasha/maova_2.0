@@ -15,7 +15,7 @@
         <div class="sevice__full-page page">
           <div class="wrapper__full-page">
             <img src="@/assets/close.svg" alt class="page__close" @click="close" />
-            <div class="page__header">{{ service.title }}</div>
+            <h1 class="page__header">{{ service.title }}</h1>
             <div class="page__description">
               <!-- циклом вывести абзацы -->
               <p class="page__sub" v-for="(sub,index) in service.description" :key="index">{{ sub }}</p>

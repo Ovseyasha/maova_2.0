@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.fe25908a73fbbd0374b5d5a0f66c63d9.js"
+  "/precache-manifest.733d15c6c1c9483949d55e3772425e0a.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "maova_2.0"});
+workbox.core.setCacheNameDetails({prefix: "OMDESIGN"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {

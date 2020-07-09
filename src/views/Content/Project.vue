@@ -21,19 +21,15 @@
           </slick>
         </div>
         <div class="project__text animate__animated animate__fadeInLeft">
-          <div class="project__name">{{project.subTitle}}</div>
+          <h1 class="project__name">{{project.subTitle}}</h1>
           <div class="subs">
             <div class="subs__item">
               <div class="subs__title">Деятельность компании:</div>
-              <div
-                class="subs__text"
-                v-for="(sub,index) in project.aboutCompany"
-                :key="index"
-              >{{sub}}</div>
+              <p class="subs__text" v-for="(sub,index) in project.aboutCompany" :key="index">{{sub}}</p>
             </div>
             <div class="subs__item">
               <div class="subs__title">Задача:</div>
-              <div class="subs__text" v-for="(sub,index) in project.task" :key="index">{{sub}}</div>
+              <p class="subs__text" v-for="(sub,index) in project.task" :key="index">{{sub}}</p>
             </div>
           </div>
         </div>

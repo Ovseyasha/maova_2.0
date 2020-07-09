@@ -5,12 +5,18 @@
       <div class="view__item view__item_header">{{header}}</div>
       <input
         type="text"
-        class="view__input"
+        class="view__input input"
         placeholder="Название"
         v-if="category === 'service'"
         v-model="service.title"
       />
-      <input type="text" class="view__input" placeholder="Название" v-else v-model="project.title" />
+      <input
+        type="text"
+        class="view__input input"
+        placeholder="Название"
+        v-else
+        v-model="project.title"
+      />
       <div class="view__item view__item_desc">
         <template v-if="category === 'service'">
           <div class="view__item view__item_sub">Описание</div>
@@ -22,7 +28,7 @@
           <div class="view__item view__item_sub">Краткое описание</div>
           <input
             type="text"
-            class="view__input"
+            class="view__input input"
             placeholder="Для карточки проекта"
             v-model="project.subTitle"
           />
@@ -36,7 +42,6 @@
         <ChangeImg v-if="category === 'service' " :img="service.img" @changed-img="changeImg"></ChangeImg>
         <ChangeImg v-else :img="project.img" @changed-img="changeImg"></ChangeImg>
       </div>
-
       <div class="view__item view__item_settings">
         <!-- for services steps StepsEditor -->
         <template v-if="category == 'service'">
@@ -66,20 +71,22 @@
         <div class="view__item view__item_sub">Срок выполнения:</div>
         <input
           type="text"
-          class="view__input view__input_date"
+          class="view__input view__input_date input"
           placeholder="Пример: Срок выполнения от 25 дней"
           v-model="service.date"
         />
       </template>
-
       <!-- for projects -->
       <template v-else>
         <div class="view__sub">Выберите предоставленную услугу:</div>
-        <select class="view__select" v-model="project.nameOfService">
-          <option class="view__option" v-for="(name,index) in categoryName" :key="index">{{name}}</option>
+        <select class="input view__select" v-model="project.nameOfService">
+          <option
+            class="view__option input"
+            v-for="(name,index) in categoryName"
+            :key="index"
+          >{{name}}</option>
         </select>
       </template>
-
       <button type="submit" class="view__save btn" @click="save">Сохранить</button>
     </template>
   </div>
@@ -152,7 +159,6 @@ export default {
   },
   methods: {
     loadSubs (v) {
-      console.log(v)
       this.service.description = v
     },
     loadCompSubs (v) {
@@ -162,7 +168,6 @@ export default {
       this.project.task = v
     },
     changeSteps (v) {
-      console.log(v)
       this.service.steps = v
     },
     changeImg (v) {
@@ -202,7 +207,6 @@ export default {
             this.$router.push('/admin/services')
           } catch (error) {
             this.loading = false
-            console.log(error)
             alert(error)
           }
         }
@@ -235,7 +239,6 @@ export default {
             this.$router.push('/admin/projects')
           } catch (error) {
             this.loading = false
-            console.log(error)
             alert(error)
           }
         }
@@ -253,18 +256,7 @@ export default {
 
 <style lang="less" scoped>
 .btn {
-  background: #4d6a00;
-  outline: none;
-  border: none;
-  font-size: 18px;
-  text-align: center;
-  color: #f2f2f2;
-  cursor: pointer;
-  padding: 10px;
   margin-bottom: 20px;
-  &:active {
-    background: darken(#4d6a00, 5%);
-  }
 }
 .view {
   display: flex;
@@ -283,16 +275,13 @@ export default {
       letter-spacing: 0.09em;
       text-transform: uppercase;
     }
-
     &_desc {
       padding-bottom: 20px;
       border-bottom: 2px solid grey;
     }
-
     &_sub {
       font-size: 20px;
     }
-
     &_img {
       width: 25%;
       @media (max-width: 1200px) {
@@ -302,71 +291,24 @@ export default {
         width: 100%;
       }
     }
-
     &_settings {
       padding-bottom: 20px;
       border-top: 2px solid grey;
       border-bottom: 2px solid grey;
     }
   }
-
   &__input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    outline: none;
-    background: #f5f5f5;
-    border: 1px solid #959595;
-    box-sizing: border-box;
-    font-family: Montserrat;
-    font-style: italic;
-    font-weight: normal;
-    font-size: 18px;
     padding: 1%;
-    border-radius: 0;
     margin-bottom: 20px;
     width: 100%;
-    &_date {
-    }
   }
-
-  &__sub {
-  }
-
   &__select {
-    // -webkit-appearance: none;
-    // -moz-appearance: none;
-    // appearance: none;
-    font-family: Montserrat;
-    font-style: italic;
-    font-weight: normal;
     font-size: 18px;
-    line-height: 22px;
-    /* identical to box height */
-
-    letter-spacing: 0.09em;
     padding: 0.5%;
-    background: #f5f5f5;
-    border-radius: 0%;
-    border: 1px solid #959595;
-    box-sizing: border-box;
-    outline: none;
-    resize: vertical;
     margin: 1%;
   }
   &__option {
-    font-style: italic;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 22px;
-    /* identical to box height */
-
-    letter-spacing: 0.09em;
     padding: 0.5%;
-    background: #f5f5f5;
-    border: 1px solid #959595;
-    box-sizing: border-box;
-    outline: none;
     margin: 2%;
   }
   &__save {

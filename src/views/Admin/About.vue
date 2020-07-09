@@ -14,7 +14,7 @@
       <div class="about__skills">
         <SkillsEditor :skills="skills" @changed-skills="deletedSkill"></SkillsEditor>
       </div>
-      <button type="submit" class="about__btn">Сохранить</button>
+      <button type="submit" class="about__btn btn">Сохранить</button>
     </template>
   </form>
 </template>
@@ -87,7 +87,6 @@ export default {
       flex-basis: auto;
     }
   }
-
   &__img {
     flex-basis: 30%;
     @media (max-width: 1000px) {
@@ -97,7 +96,6 @@ export default {
       border-bottom: 2px solid grey;
     }
   }
-
   &__text {
     flex-basis: 60%;
 
@@ -105,7 +103,6 @@ export default {
       flex-basis: 100%;
     }
   }
-
   &__hr {
     margin: 20px 0;
     width: 100%;
@@ -113,21 +110,9 @@ export default {
     background: grey;
     opacity: 0.7;
   }
-
-  &__skills {
-  }
-
   &__btn {
     margin: 20px 0;
     align-self: center;
-    background: #4d6a00;
-    outline: none;
-    border: none;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    color: #f2f2f2;
-    cursor: pointer;
     padding: 10px;
   }
 }

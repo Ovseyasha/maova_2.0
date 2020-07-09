@@ -17,10 +17,10 @@
         ref="fileInput"
         @change="onfilePicked"
       />
-      <button type="button" @click="onPickFile" class="change__btn">
+      <button type="button" @click="onPickFile" class="change__btn btn">
         <i class="fas fa-arrow-up"></i> Изменить фото
       </button>
-      <button type="button" class="change__btn change__btn_reset" @click="resetImg">
+      <button type="button" class="change__btn btn change__btn_reset" @click="resetImg">
         <i class="fas fa-trash-restore"></i> Сброс
       </button>
     </div>
@@ -89,19 +89,11 @@ export default {
   }
 
   &__btn {
-    // flex-basis: 45%;
     @media (max-width: 600px) {
       flex-basis: 100%;
       margin: 5px 0;
     }
     margin: 20px 0;
-    background: @green;
-    outline: none;
-    border: none;
-    font-size: 18px;
-    text-align: center;
-    color: #f2f2f2;
-    cursor: pointer;
     padding: 10px;
   }
 }

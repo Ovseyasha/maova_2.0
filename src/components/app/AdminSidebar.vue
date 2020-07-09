@@ -11,7 +11,6 @@ export default {
       try {
         await this.$store.dispatch('admin/logOut')
         this.$router.push('/admin?message=logout')
-        console.log('вы вышли')
       } catch (error) {
       }
     }
@@ -30,23 +29,9 @@ export default {
     top: 20px;
     right: 5%;
   }
-  &__item {
-  }
   .btn {
-    background: #4d6a00;
-    outline: none;
-    border: none;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    letter-spacing: 0.09em;
-    color: #f2f2f2;
-    cursor: pointer;
     align-self: center;
     padding: 10px;
-    &:active {
-      background: darken(#4d6a00, 5%);
-    }
   }
 }
 </style>

@@ -1,7 +1,9 @@
 {
-  "name": "maova_2.0",
+  "name": "OMDESIGN",
   "version": "0.1.0",
   "private": true,
+  "author": "Ovchinnikov Alexandr",
+  "description": "Сайт портфолио, графичекого дизайнера Овчинниковой Марины",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

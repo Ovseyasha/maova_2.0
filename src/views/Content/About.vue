@@ -5,14 +5,14 @@
       <div class="desc">
         <img v-lazy="img" alt="avatar" class="desc__pic animate__animated animate__fadeInDown" />
         <div class="desc__text animate__animated animate__fadeInRightBig">
-          <div class="desc__sub" v-for="(sub,index) in about" :key="index">{{sub}}</div>
+          <p class="desc__sub" v-for="(sub,index) in about" :key="index">{{sub}}</p>
         </div>
       </div>
       <div class="skills animate__animated animate__fadeInRight">
-        <div class="skills__header">Основные инструменты которые я использую в работе</div>
+        <h2 class="skills__header">Основные инструменты которые я использую в работе</h2>
         <div class="skills__items">
           <div class="skill" v-for="skill in skills" :key="skill.title">
-            <img :src="skill.img" :alt="skill.title" class="skill__pic" />
+            <img v-lazy="skill.img" :alt="skill.title" class="skill__pic" />
             <div class="skill__title">{{skill.title}}</div>
           </div>
         </div>
@@ -69,11 +69,8 @@ img {
       margin-bottom: 5%;
     }
   }
-
-  &__text {
-  }
-
   &__sub {
+    margin: 0;
     padding-bottom: 1%;
     @media (max-width: 600px) {
       padding-bottom: 3%;
@@ -82,6 +79,7 @@ img {
 }
 .skills {
   &__header {
+    margin: 0;
     font-family: Montserrat;
     font-style: normal;
     font-weight: 600;
@@ -99,23 +97,38 @@ img {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    @media (max-width: 600px) {
+      // justify-content: space-evenly;
+    }
   }
 }
 .skill {
-  flex-basis: 80px;
+  // flex-basis: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
   @media (max-width: 600px) {
-    flex-basis: 25%;
+    // flex-basis: 25%;
+    margin: 10px 0;
   }
   &__pic {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    align-self: start;
     @media (max-width: 600px) {
-      width: 80px;
-      height: 80px;
+      align-self: center;
+      width: 70px;
+      height: 70px;
     }
   }
-
   &__title {
+    align-self: start;
+    @media (max-width: 600px) {
+      align-self: center;
+      text-align: center;
+    }
   }
 }
 </style>

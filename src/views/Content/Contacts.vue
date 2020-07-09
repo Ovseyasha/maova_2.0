@@ -51,7 +51,7 @@
       </div>
       <form class="form animate__animated animate__slideInRight" @submit.prevent="send">
         <textarea
-          class="form__input form__input_text"
+          class="form__input input form__input_text"
           placeholder="Задача"
           v-model.trim="task"
           :class="{'form__input_invalid' : $v.task.$dirty &&! $v.task.required || $v.task.$dirty && !$v.task.minLength}"
@@ -59,21 +59,21 @@
         <div class="form__inputs">
           <input
             type="text"
-            class="form__input"
+            class="form__input input"
             placeholder="Имя"
             v-model.trim="name"
             :class="{'form__input_invalid' : $v.name.$dirty &&! $v.name.required }"
           />
           <input
             type="phone"
-            class="form__input"
+            class="form__input input"
             placeholder="Телефон"
             v-model.number="phone"
             :class="{'form__input_invalid' : $v.phone.$dirty && !$v.phone.required || $v.phone.$dirty && !$v.phone.minLength || $v.phone.$dirty &&  !$v.phone.numeric}"
           />
           <input
             type="email"
-            class="form__input"
+            class="form__input input"
             placeholder="E-mail"
             v-model.trim="email"
             :class="{'form__input_invalid' : $v.email.$dirty && !$v.email.required || $v.email.$dirty && !$v.email.email}"
@@ -82,7 +82,7 @@
         <div class="form__section">
           <div class="form__msg">{{msg}}</div>
 
-          <button type="submit" class="form__btn">
+          <button type="submit" class="form__btn btn">
             <template v-if="sending">Отправляем...</template>
             <template v-else>Отправить</template>
           </button>
@@ -154,7 +154,6 @@ export default {
         this.sending = false
       } catch (error) {
         this.msg = 'Не предвиденная ошибка!'
-        console.log(error)
       }
     }
   }
@@ -221,7 +220,6 @@ export default {
 
     color: #4f4f4f;
   }
-
   &__text {
     font-family: Montserrat;
     font-style: normal;
@@ -230,7 +228,6 @@ export default {
     text-decoration: none;
     color: #4d6a00;
   }
-
   &__soc {
     display: flex;
     margin-top: 2%;
@@ -247,12 +244,8 @@ export default {
     }
   }
 }
-
 .form {
   flex-basis: 65%;
-  // display: flex;
-  // flex-direction: column;
-  // height: 100%;
   @media (max-width: 1355px) {
     flex-basis: 100%;
   }
@@ -260,26 +253,9 @@ export default {
     @media (max-width: 1355px) {
       flex-basis: 100%;
     }
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     flex-basis: 30%;
-    outline: none;
-    background: #f5f5f5;
-    border: 1px solid #959595;
-    box-sizing: border-box;
-    font-family: Montserrat;
-    font-style: italic;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 22px;
-    /* identical to box height */
-    letter-spacing: 0.09em;
-    padding: 1%;
     margin-bottom: 2%;
-    border-radius: 0;
     &_text {
-      // height: 40vh;
       height: 55%;
       width: 100%;
       resize: none;
@@ -293,7 +269,6 @@ export default {
       border: 1px solid #a0c601;
     }
   }
-
   &__inputs {
     display: flex;
     justify-content: space-between;
@@ -306,26 +281,11 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  &__msg {
-  }
-
   &__btn {
-    background: #4d6a00;
-    outline: none;
-    border: none;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    letter-spacing: 0.09em;
     text-transform: lowercase;
-    color: #f2f2f2;
-    cursor: pointer;
     margin-top: 20px;
     width: 35%;
     padding: 20px;
-    &:active {
-      background: darken(#4d6a00, 5%);
-    }
     @media (max-width: 1355px) {
       flex-basis: 100%;
       margin-top: 0;
