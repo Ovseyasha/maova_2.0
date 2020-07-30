@@ -8,7 +8,7 @@
         </a>
       </div>
       <div class="project__content">
-        <div class="project__slider animate__animated animate__slideInLeft">
+        <div class="project__slider animate__animated animate__slideInRight">
           <slick ref="slick" :options="slickOptions">
             <div class="project__slide" v-for="img in project.imgs" :key="img.img">
               <div class="project__slide-title">{{img.title}}</div>
@@ -20,7 +20,7 @@
             </div>
           </slick>
         </div>
-        <div class="project__text animate__animated animate__fadeInLeft">
+        <div class="project__text animate__animated animate__fadeInRight">
           <h1 class="project__name">{{project.subTitle}}</h1>
           <div class="subs">
             <div class="subs__item">
@@ -30,6 +30,14 @@
             <div class="subs__item">
               <div class="subs__title">Задача:</div>
               <p class="subs__text" v-for="(sub,index) in project.task" :key="index">{{sub}}</p>
+            </div>
+            <div class="subs__item">
+              <a
+                :href="project.link"
+                v-if="project.link"
+                target="_blank"
+                class="project__link"
+              >Ссылка на проект</a>
             </div>
           </div>
         </div>
@@ -57,7 +65,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: this.project.title || 'Прокект' + ' | OMDESIGN'
+      title: (this.project.title || 'Прокект') + ' | OMDESIGN'
     }
   },
   data () {
@@ -134,8 +142,9 @@ export default {
   padding: 0;
   // bg
   button {
-    widows: 10px;
-    height: 11px;
+    overflow: hidden;
+    width: 10px;
+    height: 10px;
     border: none;
     cursor: pointer;
     outline: none;
@@ -143,8 +152,8 @@ export default {
     background: #c4c4c4;
     border-radius: 50%;
     @media (max-width: 600px) {
-      widows: 5px;
-      // height: 5px;
+      width: 5px;
+      height: 5px;
     }
   }
 }
@@ -155,15 +164,19 @@ export default {
 }
 .project {
   position: relative;
-  margin-top: 5%;
+  margin-top: 6%;
+  margin-left: -6%;
+  margin-right: -6%;
   @media (max-width: 1500px) {
     margin-top: 10%;
   }
   @media (max-width: 1300px) {
     margin-top: 15%;
   }
-  @media (max-width: 500px) {
-    padding-top: 10%;
+  @media (max-width: 800px) {
+    margin-top: 3%;
+    margin-left: -3%;
+    margin-right: -3%;
   }
   &__back {
     padding-bottom: 2%;
@@ -171,7 +184,13 @@ export default {
       padding-bottom: 4%;
     }
   }
-
+  &__link {
+    font-style: italic;
+    color: #4d6a00;
+    &:hover {
+      color: #a0c601;
+    }
+  }
   &__content {
     display: flex;
     justify-content: space-between;
@@ -206,6 +225,7 @@ export default {
   }
   &__text {
     width: 24%;
+    margin-top: 0.5%;
     @media (max-width: 1200px) {
       margin-top: 5%;
       width: 100%;

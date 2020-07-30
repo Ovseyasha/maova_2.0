@@ -54,25 +54,4 @@ export default {
     margin-bottom: 5%;
   }
 }
-
-// @media (max-width: 1200px) {
-//   .services__item {
-//     flex-basis: 30%;
-//   }
-// }
-// @media (max-width: 992px) {
-//   .services__item {
-//     flex-basis: 45%;
-//   }
-// }
-// @media (max-width: 768px) {
-//   .services__item {
-//     flex-basis: 48%;
-//   }
-// }
-// @media (max-width: 576px) {
-//   .services__item {
-//     flex-basis: 98%;
-//   }
-// }
 </style>

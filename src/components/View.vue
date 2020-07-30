@@ -78,6 +78,9 @@
       </template>
       <!-- for projects -->
       <template v-else>
+        <div class="view__sub">Ссылка на проект</div>
+        <br />
+        <input type="text" class="view__input input" v-model="project.link" />
         <div class="view__sub">Выберите предоставленную услугу:</div>
         <select class="input view__select" v-model="project.nameOfService">
           <option
@@ -144,7 +147,8 @@ export default {
         imgs: [],
         aboutCompany: [''],
         task: [''],
-        nameOfService: ''
+        nameOfService: '',
+        link: ''
       },
       deletedName: []
     }

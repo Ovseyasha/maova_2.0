@@ -40,17 +40,17 @@
               <div class="projects__header">Проекты</div>
               <div class="projects__items">
                 <!-- циклом вывести проекты у котрых данная услуга -->
-                <router-link
+                <div
                   class="projects__item"
                   v-for="project in projects"
                   :key="project.id"
-                  :to="'/projects/' + project.id"
                   :style="{ background: 'url(' + project.img + ') no-repeat' , backgroundSize: '100% 100%' }"
+                  @click="link(project.id)"
                 >
-                  <div class="projects__title">{{project.title}}</div>
-                  <div class="projects__short-desc">{{project.subTitle}}</div>
+                  <div class="projects__title" :ref="`title_${project.id}`">{{project.title}}</div>
+                  <div class="projects__short-desc" :ref="`sub_${project.id}`">{{project.subTitle}}</div>
                   <div class="projects__blur"></div>
-                </router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -99,15 +99,24 @@ export default {
     close () {
       this.$router.push('/services')
       this.fullPage = !this.fullPage
+    },
+    link (id) {
+      if (window.outerWidth <= 600) {
+        if (this.$refs[`title_${id}`][0].style.top !== '20%') {
+          this.$refs[`title_${id}`][0].style.top = '20%'
+          this.$refs[`sub_${id}`][0].style.opacity = '1'
+        } else {
+          this.$router.push(`/projects/${id}`)
+        }
+      } else {
+        this.$router.push(`/projects/${id}`)
+      }
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.service {
-}
-
 .service__cover {
   width: 350px;
   height: 350px;
@@ -144,12 +153,13 @@ export default {
 .service__header {
   transition: 0.5s;
   z-index: 1;
+  margin: 0 2%;
 }
 .blur {
   transition: 0.5s;
   position: absolute;
   background: #000;
-  opacity: 0.4;
+  opacity: 0.6;
   height: 100%;
   width: 100%;
 }
@@ -173,14 +183,14 @@ export default {
   position: absolute;
   height: 90%;
   width: 80%;
+  bottom: 0;
   @media (max-width: 700px) {
     width: 100%;
+    height: 95%;
   }
 }
 .sevice__full-page::-webkit-scrollbar {
   width: 0px;
-}
-.page {
 }
 .wrapper__full-page {
   margin: 2% 5%;
@@ -223,8 +233,6 @@ export default {
   letter-spacing: 0.05em;
 
   color: #000000;
-}
-.page__steps {
 }
 .steps {
   display: flex;
@@ -318,18 +326,14 @@ export default {
   /* identical to box height */
 
   letter-spacing: 0.09em;
-  margin-top: 1%;
+  margin-top: 3%;
   color: #4d6a00;
 }
 .page__hr {
-  margin-top: 4%;
+  margin-top: 1%;
   background: #4d6a00;
   height: 2px;
   /* margin: 0 10% 0 10%; */
-}
-.page__projects {
-}
-.projects {
 }
 .projects__header {
   margin-top: 2%;
@@ -349,15 +353,14 @@ export default {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  @media (max-width: 700px) {
-    margin-bottom: 10%;
-  }
+  margin-bottom: 10%;
 }
 .projects__item {
+  cursor: pointer;
   text-decoration: none;
   color: white;
-  width: 250px;
-  height: 250px;
+  width: 350px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -366,14 +369,20 @@ export default {
   margin: 1%;
   background: gray;
   position: relative;
-}
-.projects__item:hover .projects__title {
-  top: -10%;
-}
-.projects__item:hover .projects__short-desc {
-  opacity: 1;
+  @media (max-width: 700px) {
+    margin: 0;
+    margin-bottom: 10%;
+  }
 }
 
+@media (min-width: 600px) {
+  .projects__item:hover .projects__title {
+    top: 20%;
+  }
+  .projects__item:hover .projects__short-desc {
+    opacity: 1;
+  }
+}
 .projects__blur {
   position: absolute;
   transition: 0.5s;
@@ -383,31 +392,37 @@ export default {
   width: 100%;
 }
 .projects__title {
-  position: relative;
-  top: 10%;
-  transition: all 0.3s;
   z-index: 1;
+  color: white;
+  text-align: center;
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
-  font-size: 1em;
+  font-size: 19.8px;
   line-height: 24px;
   text-align: center;
   letter-spacing: 0.09em;
   text-transform: uppercase;
+  position: absolute;
+  top: 45%;
+  height: 50%;
+  transition: all 0.3s;
+  margin: 0 2%;
 }
 .projects__short-desc {
   z-index: 1;
+  color: white;
   text-align: center;
-  transition: all 0.3s;
-  opacity: 0;
-
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
-  font-size: 0.9em;
+  font-size: 18px;
   line-height: 22px;
   text-align: center;
   letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity 0.5s;
+  height: 15%;
+  margin: 0 5%;
 }
 </style>

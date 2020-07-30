@@ -76,13 +76,14 @@ export default {
   font-size: calc(1em + 10vw);
   position: absolute;
   color: white;
-  text-shadow: -42px 41px 21px rgba(0, 0, 0, 0.28);
+  text-shadow: 42px 41px 21px rgba(0, 0, 0, 0.28);
   margin-top: 5%;
   margin-left: 5%;
   z-index: 100000;
   font-weight: lighter;
 }
 .main__header {
+  z-index: 1;
   position: absolute;
   margin-top: 30%;
   margin-left: 5%;
@@ -101,22 +102,25 @@ export default {
   font-weight: 300;
   font-size: 30px;
   line-height: 37px;
-
   letter-spacing: 0.09em;
   text-transform: uppercase;
-
   color: #000000;
+  @media (min-width: 600px) {
+    font-size: 35px;
+  }
 }
 .footer {
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
-  font-size: 19.8px;
+  font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.09em;
   text-transform: lowercase;
-
   color: #000000;
+  @media (min-width: 600px) {
+    font-size: 25px;
+  }
 }
 @media (max-width: 500px) {
   .main {

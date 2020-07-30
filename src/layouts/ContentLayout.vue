@@ -1,7 +1,6 @@
 <template>
   <div class="content">
-    <!-- <Loader v-if="loading" /> -->
-    <div class="wrapper" ref="wrapper" @scroll="src($event)" :style="styleForWrapper">
+    <div class="wrapper" ref="wrapper" @scroll="src($event)">
       <transition
         mode="out-in"
         enter-active-class="animate__animated animate__slideInRight animate__faster"
@@ -33,7 +32,6 @@ export default {
   },
   data () {
     return {
-      // loading: true
       screen: null
     }
   },
@@ -47,23 +45,7 @@ export default {
         }
       }
       return title
-    },
-    styleForWrapper () {
-      let style = {}
-      if (this.$route.name === 'Project') {
-        style = {
-          padding: '0 5%'
-        }
-        if (this.screen <= 1160) {
-          style.height = '90vh'
-        }
-      } else {
-        style = {
-        }
-      }
-      return style
     }
-
   },
   methods: {
     src (e) {

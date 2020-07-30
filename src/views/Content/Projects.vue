@@ -5,20 +5,19 @@
       class="projects__items"
       enter-active-class="animate__fadeIn animate__animated animate__faster"
     >
-      <router-link
+      <div
         class="projects__item project-block"
         v-for="(project) in projects"
         :key="project.id"
-        tag="a"
-        :to="`/projects/${project.id}`"
         :style="getBg(project.img)"
+        @click="link(project.id)"
       >
         <div class="project-block__wrapper">
-          <div class="project-block__title">{{project.title}}</div>
-          <div class="project-block__sub-title">{{project.subTitle}}</div>
+          <div class="project-block__title" :ref="`title_${project.id}`">{{project.title}}</div>
+          <div class="project-block__sub-title" :ref="`sub_${project.id}`">{{project.subTitle}}</div>
         </div>
         <div class="project-block__blur"></div>
-      </router-link>
+      </div>
     </transition-group>
   </div>
 </template>
@@ -45,6 +44,18 @@ export default {
         background: `url(${img}), url(${require('@/assets/loading.gif')}) no-repeat`,
         backgroundSize: '100% 100%'
       }
+    },
+    link (id) {
+      if (window.outerWidth <= 600) {
+        if (this.$refs[`title_${id}`][0].style.top !== '20%') {
+          this.$refs[`title_${id}`][0].style.top = '20%'
+          this.$refs[`sub_${id}`][0].style.opacity = '1'
+        } else {
+          this.$router.push(`/projects/${id}`)
+        }
+      } else {
+        this.$router.push(`/projects/${id}`)
+      }
     }
   }
 }
@@ -60,48 +71,38 @@ export default {
 
   &__item {
     position: relative;
-    flex-basis: 23%;
-    height: 35vh;
-    margin: auto;
-    background: white;
+    width: 350px;
+    height: 350px;
     overflow: hidden; /* clearfix */
     margin: 1%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    &:hover .project-block__title {
-      top: -50px;
-    }
-    &:hover .project-block__sub-title {
-      opacity: 1;
-    }
-    @media (max-width: 1200px) {
-      flex-basis: 30%;
-      height: 35vh;
-    }
-    @media (max-width: 992px) {
-      flex-basis: 48%;
-      height: 35vh;
-    }
-    @media (max-width: 768px) {
-      flex-basis: 98%;
-      height: 55vh;
-    }
-    @media (max-width: 576px) {
-      flex-basis: 98%;
-      height: 50vh;
+
+    @media (min-width: 600px) {
+      &:hover .project-block__title {
+        top: 20%;
+      }
+      &:hover .project-block__sub-title {
+        opacity: 1;
+      }
     }
   }
 }
 .project-block {
+  cursor: pointer;
   &__wrapper {
     width: 100%;
+    height: 100%;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   &__title {
-    width: 100%;
     color: white;
     text-align: center;
     font-family: Montserrat;
@@ -112,14 +113,13 @@ export default {
     text-align: center;
     letter-spacing: 0.09em;
     text-transform: uppercase;
-    position: relative;
+    position: absolute;
+    top: 45%;
+    height: 50%;
     transition: all 0.3s;
-    top: 2em;
-    /* top: -4em; */
   }
 
   &__sub-title {
-    width: 100%;
     color: white;
     text-align: center;
     font-family: Montserrat;
@@ -131,6 +131,8 @@ export default {
     letter-spacing: 0.05em;
     opacity: 0;
     transition: opacity 0.5s;
+    height: 15%;
+    margin: 0 5%;
   }
   &__blur {
     position: absolute;
