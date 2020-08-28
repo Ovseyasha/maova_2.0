@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
-import store from '../index'
+/* eslint-disable */
+
 export default {
   namespaced: true,
   state: {
@@ -27,11 +28,8 @@ export default {
   },
   actions: {
     async LoadProjects ({ commit }) {
-      store.commit('common/clearError')
       try {
-        const projects = await firebase.database().ref('projects').once('value')
-        const loadProjects = projects.val()
-        // console.log(loadServices)
+        const loadProjects = (await firebase.database().ref('projects').once('value')).val()
         const projectsArray = []
         if (loadProjects !== null) {
           Object.keys(loadProjects).forEach((key) => {
@@ -44,12 +42,10 @@ export default {
         }
         commit('LoadProjects', projectsArray)
       } catch (error) {
-        store.commit('common/setError', error.message)
         throw error
       }
     },
     async addNewPorject ({ commit }, payload) {
-      store.commit('common/clearError')
       try {
         // здесь отправить на сервер
         const newProject = payload.project
@@ -58,7 +54,7 @@ export default {
         const key = project.key
         const fileName = payload.img.name
         // const ext = fileName.slice(fileName.lastIndexOf('.'))
-        const storages = await firebase.storage().ref(`projects/bg/${key}/${fileName}`).put(payload.img)
+        const storages = await firebase.storage().ref(`projects/${key}/bg/${fileName}`).put(payload.img)
         const imageUrl = await storages.ref.getDownloadURL()
         await firebase.database().ref('projects').child(key).update({ img: imageUrl, fileName: fileName })
         // ---------------------- SLIDER -------------------------------------------
@@ -66,7 +62,7 @@ export default {
           if (typeof (newProject.imgs[i].img) !== 'string') {
             const slideName = Math.random() + newProject.imgs[i].img.name
             const slideFile = newProject.imgs[i].img
-            const storagesSlide = await firebase.storage().ref(`projects/slides/${key}/${slideName}`).put(slideFile)
+            const storagesSlide = await firebase.storage().ref(`projects/${key}/slides/${slideName}`).put(slideFile)
             const slideUrl = await storagesSlide.ref.getDownloadURL()
             const index = i
             const title = newProject.imgs[i].title
@@ -81,12 +77,10 @@ export default {
         })
       } catch (error) {
         // error logic here
-        store.commit('common/setError', error.message)
         throw error
       }
     },
     async editProject ({ commit, getters, dispatch }, payload) {
-      store.commit('common/clearError')
       try {
         // здесь отправить на сервер
         const newProject = payload.project
@@ -96,7 +90,7 @@ export default {
           // const fileName = newProject.img.name
           await dispatch('loadProjectById', id)
           const fileName = getters.project.fileName
-          const storages = await firebase.storage().ref(`projects/bg/${id}/${fileName}`).put(newProject.img)
+          const storages = await firebase.storage().ref(`projects/${id}/bg/${fileName}`).put(newProject.img)
           const imageUrl = await storages.ref.getDownloadURL()
           newProject.img = imageUrl
         }
@@ -105,7 +99,7 @@ export default {
           for (let i = 0; i < payload.deletedName.length; i++) {
             const storage = firebase.storage()
             const storageRef = storage.ref()
-            const desertRef = storageRef.child(`projects/slides/${id}/${payload.deletedName[i]}`)
+            const desertRef = storageRef.child(`projects/${id}/slides/${payload.deletedName[i]}`)
             await desertRef.delete()
           }
         }
@@ -113,7 +107,7 @@ export default {
           if (typeof (newProject.imgs[i].img) !== 'string') {
             const slideName = Math.random() + newProject.imgs[i].fileName
             const slideFile = newProject.imgs[i].img
-            const storagesSlide = await firebase.storage().ref(`projects/slides/${id}/${slideName}`).put(slideFile)
+            const storagesSlide = await firebase.storage().ref(`projects/${id}/slides/${slideName}`).put(slideFile)
             const slideUrl = await storagesSlide.ref.getDownloadURL()
             newProject.imgs[i].img = slideUrl
             newProject.imgs[i].fileName = slideName
@@ -122,13 +116,10 @@ export default {
         await firebase.database().ref('projects').child(id).update(newProject)
         store.dispatch('projects/LoadProjects')
       } catch (error) {
-        // error logic here
-        store.commit('common/setError', error.message)
         throw error
       }
     },
     async deleteProjectById ({ commit }, payload) {
-      store.commit('common/clearError')
       try {
         // здесь отправить на сервер
         const id = payload
@@ -136,21 +127,16 @@ export default {
         store.dispatch('projects/LoadProjects')
       } catch (error) {
         // error logic here
-        store.commit('common/setError', error.message)
         throw error
       }
     },
     async loadProjectById ({ commit }, payload) {
-      store.commit('common/clearError')
       try {
         // здесь отправить на сервер
         const id = payload
-        const project = await firebase.database().ref('projects').child(id).once('value')
-        const loadProject = project.val()
+        const loadProject = (await firebase.database().ref('projects').child(id).once('value')).val()
         commit('loadProjectById', loadProject)
       } catch (error) {
-        // error logic here
-        store.commit('common/setError', error.message)
         throw error
       }
     }

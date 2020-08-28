@@ -1,7 +1,6 @@
 <template>
   <div class="service">
     <!-- добавить бг в ковер -->
-
     <div class="service__cover" @click="open" :style="getBg">
       <div class="blur"></div>
       <div class="service__header">{{service.title}}</div>

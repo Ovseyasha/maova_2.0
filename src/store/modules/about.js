@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import store from '../index'
+/* eslint-disable */
 export default {
   namespaced: true,
   state: {
@@ -39,7 +39,7 @@ export default {
           const storageRef = Dstorage.ref()
           const desertRef = storageRef.child(`about/avatar/${id}__${getters.all.imgName}`)
           await desertRef.delete()
-          // await firebase.storage().ref(`about/avatar/${id}__${payload.imgName}`).delete()
+          await firebase.storage().ref(`about/avatar/${id}__${payload.imgName}`).delete()
           const storage = await firebase.storage().ref(`about/avatar/${id}__${fileName}`).put(payload.img)
           const imgUrl = await storage.ref.getDownloadURL()
           payload.img = imgUrl
@@ -72,19 +72,16 @@ export default {
         }
         await firebase.database().ref(`about/${id}`).update(updateData)
       } catch (error) {
-        store.commit('common/setError', error)
         throw error
       }
     },
     async loadAbout ({ commit }, payload) {
       const id = '-MA0mY_wLX4ydQIAna1e'
-      store.commit('common/clearError')
       try {
         // done logic here
         const about = (await firebase.database().ref('about').once('value')).val()
         commit('loadAbout', about[id])
       } catch (error) {
-        store.commit('common/setError', error.message)
         throw error
       }
     }

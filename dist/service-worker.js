@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.9ba93365c3f554a6fba22c3e347020ff.js"
+  "/precache-manifest.10e40a365af34a90dfad83218bac248b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "OMDESIGN"});

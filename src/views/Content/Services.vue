@@ -1,11 +1,11 @@
 <template>
   <div class="services">
     <div class="services__items">
-      <Loader v-if="loading" />
+      <Loader v-show="loading" />
       <transition-group
         class="services__items"
-        enter-active-class="animate__fadeIn animate__animated animate__faster"
-        v-else
+        enter-active-class="animate__fadeIn animate__animated "
+        v-show="!loading"
       >
         <Service
           class="services__item"

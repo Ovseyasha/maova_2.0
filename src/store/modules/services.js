@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import store from '../index'
+/* eslint-disable */
 export default {
   namespaced: true,
   state: {
@@ -34,10 +34,8 @@ export default {
   },
   actions: {
     async loadServices ({ commit }) {
-      store.commit('common/clearError')
       try {
-        const services = await firebase.database().ref('services').once('value')
-        const loadServices = services.val()
+        const loadServices = (await firebase.database().ref('services').once('value')).val()
         const servicesArray = []
         if (loadServices !== null) {
           Object.keys(loadServices).forEach((key) => {
@@ -48,30 +46,22 @@ export default {
             })
           })
         }
-
         commit('loadServices', servicesArray)
       } catch (error) {
-        store.commit('common/setError', error.message)
-
         throw error
       }
     },
     async addNewService ({ commit }, payload) {
-      store.commit('common/clearError')
       try {
         // здесь отправить на сервер
-        // console.log(payload)
         const newService = payload.service
         const service = await firebase.database().ref('services').push(newService)
-        // console.log(service.key)
         const key = service.key
         const fileName = payload.img.name
         const ext = fileName.slice(fileName.lastIndexOf('.'))
         const storages = await firebase.storage().ref('services/bg/' + key + ext).put(payload.img)
         const imageUrl = await storages.ref.getDownloadURL()
-
         await firebase.database().ref('services').child(key).update({ img: imageUrl, ext: ext })
-
         newService.img = imageUrl
         newService.ext = ext
         // done logic here
@@ -80,25 +70,17 @@ export default {
           id: service.key
         })
       } catch (error) {
-        // error logic here
-        store.commit('common/setError', error.message)
         throw error
       }
     },
     async editServices ({ commit }, payload) {
-      store.commit('common/clearError')
       try {
-        // здесь отправить на сервер
-        // console.log(payload)
-
         const id = payload.id
         const newService = payload.service
-
         if (typeof (newService.img) !== 'string') {
           const fileName = newService.img.name
           const ext = fileName.slice(fileName.lastIndexOf('.'))
           const storages = await firebase.storage().ref('services/bg/' + id + ext).put(newService.img)
-
           const imageUrl = await storages.ref.getDownloadURL()
           newService.img = imageUrl
           newService.ext = ext
@@ -107,13 +89,11 @@ export default {
         store.dispatch('services/loadServices')
       } catch (error) {
         // error logic here
-        store.commit('common/setError', error.message)
         throw error
       }
     },
 
     async deleteServicesById ({ commit, dispatch, getters }, payload) {
-      store.commit('common/clearError')
       try {
         // здесь отправить на сервер
         const id = payload
@@ -128,12 +108,10 @@ export default {
         store.dispatch('services/loadServices')
       } catch (error) {
         // error logic here
-        store.commit('common/setError', error.message)
         throw error
       }
     },
     async loadServiceById ({ commit }, payload) {
-      store.commit('common/clearError')
       try {
         // здесь отправить на сервер
         const id = payload
@@ -141,7 +119,6 @@ export default {
         commit('loadServiceById', service)
       } catch (error) {
         // error logic here
-        store.commit('common/setError', error.message)
         throw error
       }
     }

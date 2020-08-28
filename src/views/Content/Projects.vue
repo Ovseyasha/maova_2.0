@@ -1,7 +1,8 @@
 <template>
   <div class="projects">
-    <Loader v-if="loading" />
+    <Loader v-show="loading" />
     <transition-group
+      v-show="!loading"
       class="projects__items"
       enter-active-class="animate__fadeIn animate__animated animate__faster"
     >

@@ -43,18 +43,25 @@ Vue.directive('scroll', {
     window.addEventListener('scroll', f)
   }
 })
-
+// OLD
+//    apiKey: 'AIzaSyDffydR-U9oOpMzn0vo8W17qdawxdepC40',
+//   authDomain: 'maova-b6223.firebaseapp.com',
+//   databaseURL: 'https://maova-b6223.firebaseio.com',
+//   projectId: 'maova-b6223',
+//   storageBucket: 'gs://maova-b6223.appspot.com',
+//   messagingSenderId: '925025116675',
+//   appId: '1:925025116675:web:5d4ec0f951759610d3e436',
+//   measurementId: 'G-GCCZECYRB7'
 const firebaseConfig = {
-  apiKey: 'AIzaSyDffydR-U9oOpMzn0vo8W17qdawxdepC40',
-  authDomain: 'maova-b6223.firebaseapp.com',
-  databaseURL: 'https://maova-b6223.firebaseio.com',
-  projectId: 'maova-b6223',
-  storageBucket: 'gs://maova-b6223.appspot.com',
-  messagingSenderId: '925025116675',
-  appId: '1:925025116675:web:5d4ec0f951759610d3e436',
-  measurementId: 'G-GCCZECYRB7'
+  apiKey: 'AIzaSyDW9amaT-kZaTTuSYzbwZs7ewNF0dgXJBs',
+  authDomain: 'omdesign-om.firebaseapp.com',
+  databaseURL: 'https://omdesign-om.firebaseio.com',
+  projectId: 'omdesign-om',
+  storageBucket: 'omdesign-om.appspot.com',
+  messagingSenderId: '731537717616',
+  appId: '1:731537717616:web:a8aa520a6f8f4d6717f7b5',
+  measurementId: 'G-RD3BNHGCVQ'
 }
-
 firebase.initializeApp(firebaseConfig)
 firebase.analytics()
 let app
